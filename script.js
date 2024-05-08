@@ -2,6 +2,19 @@ const burger = document.querySelector('.burger');
 const close = document.querySelector('.close');
 const menuContent = document.querySelector('.menu ul');
 
+window.addEventListener('resize', () => {
+    if (window.innerWidth <= 780) {
+        burger.style.display = 'flex';
+        menuContent.style.display = 'none';
+        close.style.display = 'none';
+    }
+    if (window.innerWidth > 780) {
+        menuContent.style.display = 'flex';
+        burger.style.display = 'none';
+        close.style.display = 'none';
+    }
+});
+
 burger.addEventListener('click', () => {
     menuContent.style.display = 'flex';
     burger.style.display = 'none';
@@ -29,14 +42,17 @@ window.addEventListener('scroll', () => {
     const aProposSection = document.getElementById('a-propos').getBoundingClientRect();
     const contactSection = document.getElementById('contact').getBoundingClientRect();
     const menuItems = document.querySelectorAll('.menu ul li a');
+    const ratio = .5;
 
     let currentSection = '';
 
-    if (window.scrollY >= accueilSection.top && window.scrollY < aProposSection.top + 50) {
+    const y = Math.round(window.innerHeight * ratio);
+
+    if (window.scrollY >= accueilSection.top && window.scrollY < aProposSection.top + y) {
         currentSection = 'accueil';
-    } else if (window.scrollY >= aProposSection.top - 50 && window.scrollY < contactSection.top + 50) {
+    } else if (window.scrollY >= aProposSection.top - y && window.scrollY < contactSection.top + y) {
         currentSection = 'a-propos';
-    } else if (window.scrollY >= contactSection.top - 50) {
+    } else if (window.scrollY >= contactSection.top) {
         currentSection = 'contact';
     }
 

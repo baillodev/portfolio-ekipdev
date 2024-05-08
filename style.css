@@ -6,7 +6,7 @@
 }
 
 html {
-    scroll-behavior: smooth;
+  scroll-behavior: smooth;
 }
 
 body {
@@ -320,9 +320,8 @@ footer {
 
 .sidebar {
     display: flex;
-    justify-content: space-evenly;
+    justify-content: space-around;
     padding: 40px 0;
-    position: relative;
 }
 
 .sidebar div h2 {
@@ -338,43 +337,12 @@ footer {
     line-height: 24px;
 }
 
-.meta {
-    text-align: center;
-    width: 120px;
-    position: absolute;
-    right: 60px;
-    top: 80px;
-    display: flex;
-    flex-direction: column;
-    gap: 10px;
-}
-
-.icons {
-    display: flex;
-    justify-content: space-between;
-}
-
-.icon {
-    padding: 8px;
-    border: 2px solid #000;
-    border-radius: 50%;
-    cursor: pointer;
-}
-
-.icon i {
-    font-size: 18px;
-}
-
-.icon:hover {
-    background-color: rgba(0, 0, 0, 0.1)
-}
-
 footer hr {
     width: 90%;
     margin: auto;
 }
 
-.copyright {
+.footer-content {
     display: flex;
     justify-content: space-between;
     line-height: 40px;
@@ -382,13 +350,20 @@ footer hr {
     font-size: 18px;
 }
 
-.copyright li {
-    display: inline-block;
-    margin-left: 14px;
+.meta {
+    display: flex;
 }
 
-.copyright a:hover {
-    color: #0000ff;
+.meta li a {
+    margin-left: 14px;
+    padding: 8px;
+    border: 2px solid #000;
+    border-radius: 50%;
+    cursor: pointer;
+}
+
+.meta li a:hover {
+    background-color: rgba(0, 0, 0, 0.1)
 }
 
 /*************** RESPONSIVE *************/
@@ -459,18 +434,6 @@ footer hr {
     .sidebar div h3 {
         font-size: 20px;
     }
-
-    .meta {
-        width: 90px;
-    }
-    
-    .icon {
-        padding: 5px;
-    }
-    
-    .icon i {
-        font-size: 15px;
-    }
 }
 
 @media screen and (max-width: 1080px) {
@@ -511,40 +474,37 @@ footer hr {
         padding-right: 0;
     }
 
-    .burger {
-        display: flex;
-    }
-
     .menu ul {
         width: 40vw;
         height: 100vh;
         background-color: #fff;
-        box-shadow: -1px 0 5px #000;
+        box-shadow: -1px 1px 3px #000;
         display: none;
         flex-direction: column;
         justify-content: flex-start;
         gap: 0;
         font-size: 18px;
+        z-index: 1;
     }
 
     .menu ul li,
     .menu ul li a {
         height: 10vh;
     }
+
+    .menu ul li a {
+        justify-content: center;
+        border-top: none;
+        border-bottom: 8px solid transparent;
+    }
     
     .menu ul li a i {
         font-size: 24px;
-    }
-    
-    .menu ul li a {
-        justify-content: center;
     }
 
     #contact {
         height: auto;
     }
-
-
 
     #contact form {
         width: 380px;
@@ -576,4 +536,26 @@ footer hr {
         width: 180px;
         font-size: 18px;
     }
+
+    .sidebar {
+        flex-direction: column;
+        align-items: center;
+        text-align: center;
+        gap: 30px;
+    }
+    
+    .sidebar div h2 {
+        margin-bottom: 10px;
+    }
+
+    footer hr {
+        width: 80%;
+    }
+
+    .footer-content {
+        flex-direction: column;
+        align-items: center;
+        gap: 20px;
+    }
 }
+
