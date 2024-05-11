@@ -65,25 +65,53 @@ a {
     display: flex;
     align-items: center;
     padding: 0 20px;
-    border-top: 8px solid transparent;
+    position: relative;
+    transition-duration: .5s;
+}
+
+.menu ul li a::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 0;
+    height: 5px;
+    background-color: #008b8b;
+    transition: width .5s;
 }
 
 .menu ul li a:hover {
-    border-color: #008b8b;
-    background-color: rgba(0, 139, 139, 0.2);
+    background-color: rgba(0, 139, 139, 0.3);
 }
 
-.active {
-    border-color: #008b8b !important;
-    background-color: rgba(0, 139, 139, 0.2);
+@keyframes underline {
+    from { width: 0;}
+    to { width: 100%;}
 }
+
+.menu ul li a:hover::before {
+    width: 100%;
+    animation: underline .5s ease forwards;
+}
+
+.menu ul li a.active::before {
+    width: 100%;
+    transition: none;
+    animation-name: underline;
+    animation-fill-mode: forwards;
+}
+
+.menu ul li a.active {
+    background-color: rgba(0, 139, 139, 0.3);
+}
+
 
 .burger, .close {
     display: none;
     height: 100%;
     justify-content: flex-end;
     align-items: center;
-    margin-right: 80px;
+    margin-right: 40px;
 }
 
 .burger i, .close i {
@@ -107,7 +135,6 @@ a {
     width: 100%;
     height: 80%;
     background-color:#008b8b;
-    /* background-color: #066773; */
     color: #fff;
 }
 
@@ -143,10 +170,11 @@ a {
     border: none;
     border-radius: 5px;
     cursor: pointer;
+    transition: transform .5s ease-in-out;
 }
 
 .text-accueil button:hover {
-    opacity: 0.9;
+    transform: scale(1.1);
 }
 
 .photo-accueil {
@@ -154,6 +182,15 @@ a {
     display: flex;
     justify-content: flex-start;
     align-items: center;
+}
+
+.photo-accueil img {
+    cursor: pointer;
+    transition: transform .8s ease-in-out;
+}
+
+.photo-accueil img:hover {
+    transform: scale(1.08);
 }
 
 /* A propos */
@@ -195,10 +232,11 @@ a {
     background-color: #008b8b;
     color: #fff;
     cursor: pointer;
+    transition: transform .5s ease-in-out;
 }
 
 .infos button:hover {
-    opacity: 0.9;
+    transform: scale(1.1);
 }
 
 .skills {
@@ -306,10 +344,11 @@ a {
     width: 250px;
     font-size: 20px;
     cursor: pointer;
+    transition: .5s;
 }
 
 #contact form .last-child input:hover {
-    opacity: 0.9;   
+    opacity: .8;   
 }
 
 /*************** FOOTER *************/
@@ -472,6 +511,7 @@ footer hr {
 @media screen and (max-width: 780px) {
     header {
         padding-right: 0;
+        padding-left: 40px;
     }
 
     .menu ul {
@@ -484,19 +524,16 @@ footer hr {
         justify-content: flex-start;
         gap: 0;
         font-size: 18px;
-        z-index: 1;
     }
 
     .menu ul li,
     .menu ul li a {
         height: 10vh;
     }
-
+    
     .menu ul li a {
         justify-content: center;
-        border-top: none;
-        border-bottom: 8px solid transparent;
-    }
+    }  
     
     .menu ul li a i {
         font-size: 24px;
