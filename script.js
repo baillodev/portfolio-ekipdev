@@ -1,84 +1,136 @@
-const burger = document.querySelector('.burger');
-const close = document.querySelector('.close');
-const menuContent = document.querySelector('.menu ul');
+const burger = document.querySelector(".burger");
+const close = document.querySelector(".close");
+const menuContent = document.querySelector(".menu ul");
 
-window.addEventListener('resize', () => {
-    if (window.innerWidth <= 780) {
-        burger.style.display = 'flex';
-        menuContent.style.display = 'none';
-        close.style.display = 'none';
-    }
-    if (window.innerWidth > 780) {
-        menuContent.style.display = 'flex';
-        burger.style.display = 'none';
-        close.style.display = 'none';
-    }
+window.addEventListener("resize", () => {
+  if (window.innerWidth <= 720) {
+    burger.style.display = "flex";
+    menuContent.style.display = "none";
+    close.style.display = "none";
+  }
+  if (window.innerWidth > 720) {
+    menuContent.style.display = "flex";
+    burger.style.display = "none";
+    close.style.display = "none";
+  }
 });
 
-burger.addEventListener('click', () => {
-    menuContent.style.display = 'flex';
-    burger.style.display = 'none';
-    close.style.display = 'flex';
+burger.addEventListener("click", () => {
+  menuContent.style.display = "flex";
+  burger.style.display = "none";
+  close.style.display = "flex";
 });
 
-close.addEventListener('click', () => {
-    menuContent.style.display = 'none';
-    burger.style.display = 'flex';
-    close.style.display = 'none';
+close.addEventListener("click", () => {
+  menuContent.style.display = "none";
+  burger.style.display = "flex";
+  close.style.display = "none";
 });
 
-const enSavoirPlusButton = document.querySelector('#accueil button');
-enSavoirPlusButton.addEventListener('click', () => {
-    window.location.href = '#a-propos';
+const img = document.querySelector(".photo-accueil img");
+const modal = document.getElementById("my-modal");
+const modalImg = document.getElementById("img01");
+const captionText = document.getElementById("caption");
+
+img.onclick = function () {
+  modal.style.display = "block";
+  modalImg.src = this.src;
+  captionText.innerHTML = this.title;
+};
+
+const span = document.querySelector(".close-modal");
+
+span.onclick = function () {
+  modal.style.display = "none";
+};
+
+window.onclick = function (event) {
+  if (event.target == modal) {
+    modal.style.display = "none";
+  }
+};
+
+const enSavoirPlusButton = document.querySelector("#accueil button");
+enSavoirPlusButton.addEventListener("click", () => {
+  window.location.href = "#a-propos";
 });
 
-const meContacterButton = document.querySelector('#a-propos button');
-meContacterButton.addEventListener('click', () => {
-    window.location.href = '#contact';
+const meContacterButton = document.querySelector("#a-propos button");
+meContacterButton.addEventListener("click", () => {
+  window.location.href = "#contact";
 });
 
-window.addEventListener('scroll', () => {
-    const accueilSection = document.getElementById('accueil').getBoundingClientRect();
-    const aProposSection = document.getElementById('a-propos').getBoundingClientRect();
-    const contactSection = document.getElementById('contact').getBoundingClientRect();
-    const menuItems = document.querySelectorAll('.menu ul li a');
-    const ratio = .5;
+window.addEventListener("scroll", () => {
+  const accueilSection = document
+    .getElementById("accueil")
+    .getBoundingClientRect();
+  const aProposSection = document
+    .getElementById("a-propos")
+    .getBoundingClientRect();
+  const contactSection = document
+    .getElementById("contact")
+    .getBoundingClientRect();
+  const menuItems = document.querySelectorAll(".menu ul li a");
 
-    let currentSection = '';
+  let currentSection = "";
 
-    const y = Math.round(window.innerHeight * ratio);
+  const ratio = window.innerHeight * 0.1;
 
-    if (window.scrollY >= accueilSection.top && window.scrollY < aProposSection.top + y) {
-        currentSection = 'accueil';
-    } else if (window.scrollY >= aProposSection.top - y && window.scrollY < contactSection.top + y) {
-        currentSection = 'a-propos';
-    } else if (window.scrollY >= contactSection.top) {
-        currentSection = 'contact';
-    }
+  if (accueilSection.top <= ratio && accueilSection.bottom > ratio) {
+    currentSection = "accueil";
+  } else if (aProposSection.top <= ratio && aProposSection.bottom > ratio) {
+    currentSection = "a-propos";
+  } else if (contactSection.top <= ratio && contactSection.bottom > ratio) {
+    currentSection = "contact";
+  }
 
-    menuItems.forEach(item => {
-        item.classList.remove('active');
-    });
+  menuItems.forEach((item) => {
+    item.classList.remove("active");
+  });
 
-    const currentMenuItem = document.querySelector(`.menu ul li a[href="#${currentSection}"]`);
-    if (currentMenuItem) {
-        currentMenuItem.classList.add('active');
-    }
+  const currentMenuItem = document.querySelector(
+    `.menu ul li a[href="#${currentSection}"]`
+  );
+  if (currentMenuItem) {
+    currentMenuItem.classList.add("active");
+  }
 });
 
+const formulaire = document.querySelector("form");
+const alertContainer = document.getElementById("alert-container");
 
-const formulaire = document.querySelector('form');
-formulaire.addEventListener('submit', (event) => {
-    event.preventDefault();
+formulaire.addEventListener("submit", (event) => {
+  event.preventDefault();
 
-    const nom = formulaire.querySelector('#nom').value.trim();
-    const email = formulaire.querySelector('#email').value.trim();
-    const message = formulaire.querySelector('#message').value.trim();
+  const nom = formulaire.querySelector("#nom");
+  const email = formulaire.querySelector("#email");
+  const message = formulaire.querySelector("#message");
 
-    if (nom === '' || email === '' || message === '') {
-        alert('Veuillez remplir tous les champs du formulaire.');
-    } else {
-        alert('Merci de nous avoir contacté :)');
-    }
+  // Effacer les alertes existantes
+  alertContainer.innerHTML = "";
+
+  if (
+    nom.value.trim() === "" ||
+    email.value.trim() === "" ||
+    message.value.trim() === ""
+  ) {
+    showAlert("Veuillez remplir tous les champs du formulaire.", "error");
+  } else {
+    showAlert("Merci de nous avoir contacté :)", "success");
+    nom.value = "";
+    email.value = "";
+    message.value = "";
+  }
 });
 
+function showAlert(message, type) {
+  const alertDiv = document.createElement("div");
+  alertDiv.className = `alert ${type}`;
+  alertDiv.textContent = message;
+  alertContainer.appendChild(alertDiv);
+
+  // Supprimer l'alerte après quelques secondes
+  setTimeout(() => {
+    alertDiv.remove();
+  }, 2000); // 2 secondes
+}
